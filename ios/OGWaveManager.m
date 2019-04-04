@@ -10,6 +10,11 @@
 #import "OGWaverformView.h"
 #import <React/UIView+React.h>
 
+@interface OGWaveManager ()
+
+@property (nonatomic, strong) OGWaverformView *OGWaveformView;
+
+@end
 
 @implementation OGWaveManager
 
@@ -26,10 +31,11 @@ RCT_EXPORT_VIEW_PROPERTY(onFinishPlay, RCTBubblingEventBlock);
 - (UIView *)view
 {
 
-    OGWaverformView *OGWaveformView =  [[OGWaverformView alloc] initWithBridge:self.bridge];
-    [OGWaveformView setDelegate:self];
-    return OGWaveformView;
+    self.OGWaveformView =  [[OGWaverformView alloc] initWithBridge:self.bridge];
+    [self.OGWaveformView setDelegate:self];
+    return self.OGWaveformView;
 }
+
 RCT_EXPORT_MODULE();
 
 - (dispatch_queue_t)methodQueue
@@ -50,4 +56,9 @@ RCT_EXPORT_MODULE();
 
     waveformView.onFinishPlay(@{@"onFinishPlay":@"true",@"currentStatus":@"stopped",@"componentID":componentID});
 }
+
+RCT_EXPORT_METHOD(seekToTime:(float)milliseconds{
+    [self.OGWaveformView seekAudio:milliseconds];
+})
+
 @end

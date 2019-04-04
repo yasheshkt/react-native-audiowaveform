@@ -62,5 +62,6 @@ typedef enum {
 - (instancetype)initWithBridge:(RCTBridge *)bridge NS_DESIGNATED_INITIALIZER;
 - (NSData *) renderPNGAudioPictogramLogForAssett:(AVURLAsset *)songAsset;
 - (void)updateProgress:(NSTimer*)timer;
+- (void)seekAudio:(float)milliseconds;
 
 @end

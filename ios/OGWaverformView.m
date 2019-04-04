@@ -92,7 +92,6 @@
     NSLog(@"play finished ::: %@",_soundPath);
     [_player seekToTime:CMTimeMake(0,1)];
     [_delegate OGWaveFinishPlay:self componentID:_componentID];
-
 }
 
 -(void)setAutoPlay:(BOOL)autoPlay{
@@ -116,6 +115,7 @@
     [_playbackTimer invalidate];
     _playbackTimer = nil;
 }
+
 -(void)playAudio{
 
     _playbackTimer=[NSTimer scheduledTimerWithTimeInterval:0.1
@@ -124,6 +124,12 @@
                                                  userInfo:nil
                                                   repeats:YES];
     [_player play];
+}
+
+-(void)seekAudio:(float)milliseconds{
+    [self pauseAudio];
+    [_player seekToTime:(CMTimeMake(milliseconds, 1000))];
+    [self playAudio];
 }
 
 -(void)setStop:(BOOL)stop{
