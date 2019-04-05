@@ -5,11 +5,13 @@
 
 "use strict";
 import React, { PureComponent } from "react";
-import { Platform, processColor, DeviceEventEmitter, requireNativeComponent } from "react-native";
+import { Platform, processColor, DeviceEventEmitter, requireNativeComponent, NativeModules } from "react-native";
 
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
 
 type StateType = { componentID: string };
+
+export const { OGWaveManager } = NativeModules;
 
 export default class WaveForm extends PureComponent<WaveObjectPropsType, StateType> {
   constructor(props) {
