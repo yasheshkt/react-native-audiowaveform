@@ -129,7 +129,6 @@
 -(void)seekAudio:(float)milliseconds{
     [self pauseAudio];
     [_player seekToTime:(CMTimeMake(milliseconds, 1000))];
-    [self playAudio];
 }
 
 -(void)setStop:(BOOL)stop{
