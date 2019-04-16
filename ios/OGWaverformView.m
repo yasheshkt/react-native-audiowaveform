@@ -129,6 +129,11 @@
 -(void)seekAudio:(float)milliseconds{
     [self pauseAudio];
     [_player seekToTime:(CMTimeMake(milliseconds, 1000))];
+    _playbackTimer=[NSTimer scheduledTimerWithTimeInterval:0.1
+                                                    target:self
+                                                  selector:@selector(updateProgress:)
+                                                  userInfo:nil
+                                                   repeats:YES];
 }
 
 -(void)setStop:(BOOL)stop{
