@@ -61,4 +61,8 @@ RCT_EXPORT_METHOD(seekToTime:(float)milliseconds{
     [self.OGWaveformView seekAudio:milliseconds];
 })
 
+RCT_EXPORT_METHOD(setPlaybackRate:(float)rate{
+    [self.OGWaveformView setPlaybackRate:rate];
+})
+
 @end

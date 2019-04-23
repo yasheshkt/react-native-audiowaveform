@@ -214,6 +214,10 @@
 
 }
 
+-(void)setPlaybackRate:(float)rate {
+    [_player setRate:rate];
+}
+
 -(UIView *)getPlayerScrub{
 
     UIView *viewAux = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2,self.frame.size.height )];
