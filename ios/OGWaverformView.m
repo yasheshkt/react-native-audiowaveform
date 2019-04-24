@@ -35,11 +35,16 @@
     NSLog(@"reactSetFrame ::: %@",_soundPath);
 
     _isFrameReady = YES;
-
+    
+    [self.delegate OGWaveBeganProcessing:self componentID:_componentID];
     if(!_waveformImage)
+    {
         [self drawWaveform];
+    }
 
     [self addScrubber];
+    
+    [self.delegate OGWaveFinishedProcessing:self componentID:_componentID];
 
 }
 
@@ -170,6 +175,7 @@
 -(void)setSrc:(NSDictionary *)src{
 //    _propSrc = src;
     NSLog(@"SRC ::: %@",src);
+    [self.delegate OGWaveBeganProcessing:self componentID:_componentID];
 
     //Retrieve audio file
     NSString *uri =  [src objectForKey:@"uri"];
@@ -209,13 +215,12 @@
 
     [self initAudio];
 
+    [self.delegate OGWaveFinishedProcessing:self componentID:_componentID];
+    
     if(_autoPlay)
         [self playAudio];
+    
 
-}
-
--(void)setPlaybackRate:(float)rate {
-    [_player setRate:rate];
 }
 
 -(UIView *)getPlayerScrub{

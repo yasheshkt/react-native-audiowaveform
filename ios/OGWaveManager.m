@@ -10,7 +10,7 @@
 #import "OGWaverformView.h"
 #import <React/UIView+React.h>
 
-@interface OGWaveManager ()
+@interface OGWaveManager () <OGWaveDelegateProtocol>
 
 @property (nonatomic, strong) OGWaverformView *OGWaveformView;
 
@@ -27,6 +27,8 @@ RCT_EXPORT_VIEW_PROPERTY(volume, float);
 RCT_EXPORT_VIEW_PROPERTY(componentID, NSString);
 RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock);
 RCT_EXPORT_VIEW_PROPERTY(onFinishPlay, RCTBubblingEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onProcessing, RCTBubblingEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onProcessCompleted, RCTBubblingEventBlock);
 
 - (UIView *)view
 {
@@ -35,6 +37,22 @@ RCT_EXPORT_VIEW_PROPERTY(onFinishPlay, RCTBubblingEventBlock);
     [self.OGWaveformView setDelegate:self];
     return self.OGWaveformView;
 }
+
+//- (NSArray<NSString *> *)supportedEvents
+//{
+//    return @[
+//             @"OGWaveManager.ProcessingWave",
+//             @"OGWaveManager.WaveCompleted",
+//             ];
+//}
+//
+//- (NSDictionary *)constantsToExport
+//{
+//    return @{
+//             @"ProcessingWave" : @"OGWaveManager.ProcessingWave",
+//             @"WaveCompleted" : @"OGWaveManager.WaveCompleted"
+//             };
+//}
 
 RCT_EXPORT_MODULE();
 
@@ -57,12 +75,24 @@ RCT_EXPORT_MODULE();
     waveformView.onFinishPlay(@{@"onFinishPlay":@"true",@"currentStatus":@"stopped",@"componentID":componentID});
 }
 
-RCT_EXPORT_METHOD(seekToTime:(float)milliseconds{
-    [self.OGWaveformView seekAudio:milliseconds];
-})
+-(void)OGWaveBeganProcessing:(OGWaverformView *)waveformView componentID:(NSString *)componentID
+{
+    if(!waveformView.onFinishPlay)
+        return;
+    
+    waveformView.onProcessing(@{@"onProcessing":@"true",@"componentID":componentID});
+}
 
-RCT_EXPORT_METHOD(setPlaybackRate:(float)rate{
-    [self.OGWaveformView setPlaybackRate:rate];
+-(void)OGWaveFinishedProcessing:(OGWaverformView *)waveformView componentID:(NSString *)componentID
+{
+    if(!waveformView.onFinishPlay)
+        return;
+    waveformView.onProcessCompleted(@{@"onProcessCompleted":@"true",@"componentID":componentID});
+}
+
+RCT_EXPORT_METHOD(seekToTime:(float)milliseconds
+{
+    [self.OGWaveformView seekAudio:milliseconds];
 })
 
 @end
