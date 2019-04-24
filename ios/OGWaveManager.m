@@ -38,22 +38,6 @@ RCT_EXPORT_VIEW_PROPERTY(onProcessCompleted, RCTBubblingEventBlock);
     return self.OGWaveformView;
 }
 
-//- (NSArray<NSString *> *)supportedEvents
-//{
-//    return @[
-//             @"OGWaveManager.ProcessingWave",
-//             @"OGWaveManager.WaveCompleted",
-//             ];
-//}
-//
-//- (NSDictionary *)constantsToExport
-//{
-//    return @{
-//             @"ProcessingWave" : @"OGWaveManager.ProcessingWave",
-//             @"WaveCompleted" : @"OGWaveManager.WaveCompleted"
-//             };
-//}
-
 RCT_EXPORT_MODULE();
 
 - (dispatch_queue_t)methodQueue
@@ -93,6 +77,10 @@ RCT_EXPORT_MODULE();
 RCT_EXPORT_METHOD(seekToTime:(float)milliseconds
 {
     [self.OGWaveformView seekAudio:milliseconds];
+})
+
+RCT_EXPORT_METHOD(setPlaybackRate:(float)rate{
+    [self.OGWaveformView setPlaybackRate:rate];
 })
 
 @end

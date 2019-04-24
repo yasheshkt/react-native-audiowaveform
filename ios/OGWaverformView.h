@@ -65,5 +65,6 @@ typedef enum {
 - (NSData *) renderPNGAudioPictogramLogForAssett:(AVURLAsset *)songAsset;
 - (void)updateProgress:(NSTimer*)timer;
 - (void)seekAudio:(float)milliseconds;
+- (void)setPlaybackRate:(float)rate;
 
 @end
