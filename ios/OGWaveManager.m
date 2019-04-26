@@ -61,7 +61,7 @@ RCT_EXPORT_MODULE();
 
 -(void)OGWaveBeganProcessing:(OGWaverformView *)waveformView componentID:(NSString *)componentID
 {
-    if(!waveformView.onFinishPlay)
+    if(!waveformView.onProcessing)
         return;
     
     waveformView.onProcessing(@{@"onProcessing":@"true",@"componentID":componentID});
@@ -69,7 +69,7 @@ RCT_EXPORT_MODULE();
 
 -(void)OGWaveFinishedProcessing:(OGWaverformView *)waveformView componentID:(NSString *)componentID
 {
-    if(!waveformView.onFinishPlay)
+    if(!waveformView.onProcessCompleted)
         return;
     waveformView.onProcessCompleted(@{@"onProcessCompleted":@"true",@"componentID":componentID});
 }
