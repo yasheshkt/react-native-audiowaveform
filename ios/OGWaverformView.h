@@ -11,6 +11,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import <React/UIView+React.h>
 #import "OGWaveDelegateProtocol.h"
+#import "AVBufferPlayer.h"
+
 @class RCTBridge;
 
 @interface OGWaverformView : UIView<NSURLConnectionDelegate>{
@@ -18,7 +20,7 @@
     Float32 _normalizeMax;
     float _imageHeight;
     float _imageWidth;
-
+    
     Float32 *_samples;
     CGSize _graphSize;
 }
@@ -35,6 +37,8 @@ typedef enum {
 @property(nonatomic) NSMutableData * mdata;
 @property(nonatomic) NSDictionary * src;
 @property(nonatomic) float volume;
+@property(nonatomic) float offsetStart;
+@property(nonatomic) float offsetEnd;
 @property(nonatomic) NSString *componentID;
 @property(nonatomic) BOOL autoPlay;
 @property(nonatomic) BOOL play;
@@ -45,11 +49,12 @@ typedef enum {
 @property(nonatomic) UIColor * waveColor;
 @property(nonatomic) UIColor * scrubColor;
 @property(nonatomic) AVURLAsset *asset;
+@property (nonatomic, strong) NSData *bufferData;
 @property(nonatomic) UIView *scrubView;
 @property(nonatomic) UIImageView *waveformImage;
 @property(nonatomic) NSString *soundPath;
-//@property(nonatomic) AVAudioPlayer *player ;
 @property(nonatomic) AVPlayer *player ;
+//@property(nonatomic) AVBufferPlayer *player ;
 @property(nonatomic) NSTimer * playbackTimer;
 @property(nonatomic) id<OGWaveDelegateProtocol> delegate;
 @property (nonatomic, copy) RCTBubblingEventBlock onPress;
