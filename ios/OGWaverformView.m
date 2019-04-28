@@ -156,7 +156,7 @@
 
 -(float)getDuration
 {
-    Float64 dur = CMTimeGetSeconds([_player currentTime]);
+    Float64 dur = CMTimeGetSeconds(_player.currentItem.duration);
     Float64 durInMiliSec = 1000*dur;
 
     return durInMiliSec;
