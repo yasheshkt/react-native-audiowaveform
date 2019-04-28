@@ -8,7 +8,6 @@
 
 #import "OGWaverformView.h"
 #import "OGWaveUtils.h"
-#import "AVBufferPlayer.h"
 
 //Using the solution exposed at http://stackoverflow.com/questions/8298610/waveform-on-io
 
@@ -153,6 +152,14 @@
                                                   selector:@selector(updateProgress:)
                                                   userInfo:nil
                                                    repeats:YES];
+}
+
+-(float)getDuration
+{
+    Float64 dur = CMTimeGetSeconds([_player currentTime]);
+    Float64 durInMiliSec = 1000*dur;
+
+    return durInMiliSec;
 }
 
 -(void)setStop:(BOOL)stop{

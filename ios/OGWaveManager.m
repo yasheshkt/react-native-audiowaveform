@@ -29,6 +29,7 @@ RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock);
 RCT_EXPORT_VIEW_PROPERTY(onFinishPlay, RCTBubblingEventBlock);
 RCT_EXPORT_VIEW_PROPERTY(onProcessing, RCTBubblingEventBlock);
 RCT_EXPORT_VIEW_PROPERTY(onProcessCompleted, RCTBubblingEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(getDuration, float);
 
 - (UIView *)view
 {
@@ -82,5 +83,11 @@ RCT_EXPORT_METHOD(seekToTime:(float)milliseconds
 RCT_EXPORT_METHOD(setPlaybackRate:(float)rate{
     [self.OGWaveformView setPlaybackRate:rate];
 })
+
+RCT_REMAP_METHOD(getDuration,
+                 getDurationWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject){
+    resolve(@([self.OGWaveformView getDuration]));
+}
 
 @end

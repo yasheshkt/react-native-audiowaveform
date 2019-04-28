@@ -11,7 +11,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import <React/UIView+React.h>
 #import "OGWaveDelegateProtocol.h"
-#import "AVBufferPlayer.h"
 
 @class RCTBridge;
 
@@ -71,5 +70,6 @@ typedef enum {
 - (void)updateProgress:(NSTimer*)timer;
 - (void)seekAudio:(float)milliseconds;
 - (void)setPlaybackRate:(float)rate;
+- (float)getDuration;
 
 @end
