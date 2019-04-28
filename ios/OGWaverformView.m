@@ -224,8 +224,6 @@
     NSURL * localUrl = [NSURL fileURLWithPath: _soundPath];
     _asset = [AVURLAsset assetWithURL: localUrl];
     
-    self.offsetStart = -10000;
-    self.offsetEnd = 10000;
     
     if (self.offsetEnd != 0 || self.offsetStart != 0 )
     {
