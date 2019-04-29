@@ -71,5 +71,6 @@ typedef enum {
 - (void)seekAudio:(float)milliseconds;
 - (void)setPlaybackRate:(float)rate;
 - (float)getDuration;
+- (void)playAudio;
 
 @end
