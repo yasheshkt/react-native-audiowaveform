@@ -8,6 +8,7 @@
 
 #import "OGWaverformView.h"
 #import "OGWaveUtils.h"
+#include <math.h>
 
 //Using the solution exposed at http://stackoverflow.com/questions/8298610/waveform-on-io
 
@@ -180,6 +181,10 @@
     }
     
     float currentXPosScrub = f*self.frame.size.width;
+    
+    if(isnan(currentXPosScrub) || currentXPosScrub < 0 || currentXPosScrub > self.frame.size.width) {
+        return;
+    }
     
     [UIView animateWithDuration:0.1
                      animations:^{
