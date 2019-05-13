@@ -373,6 +373,9 @@
         }
     }
     
+    CMTimeRange duration = songTrack.timeRange;
+    CMTime durationTotal = duration.duration;
+    
     UInt32 bytesPerSample = 2 * channelCount;
     Float32 normalizeMax = noiseFloor;
     NSLog(@"normalizeMax = %f",normalizeMax);
@@ -523,9 +526,10 @@
     UInt32 sampleRate,channelCount = 0;
     
     NSArray* formatDesc = songTrack.formatDescriptions;
+    AudioStreamBasicDescription* fmtDesc = nil;
     for(unsigned int i = 0; i < [formatDesc count]; ++i) {
         CMAudioFormatDescriptionRef item = (__bridge CMAudioFormatDescriptionRef)[formatDesc objectAtIndex:i];
-        const AudioStreamBasicDescription* fmtDesc = CMAudioFormatDescriptionGetStreamBasicDescription (item);
+        fmtDesc = CMAudioFormatDescriptionGetStreamBasicDescription (item);
         if(fmtDesc ) {
             sampleRate = fmtDesc->mSampleRate;
             channelCount = fmtDesc->mChannelsPerFrame;
@@ -600,17 +604,7 @@
     NSString *targetFilepath = [NSString stringWithFormat:@"%@/%@", docDir, fileName];
     
     //Define Audio Properties
-    AudioStreamBasicDescription mDataFormat;
-    mDataFormat.mSampleRate        = 44100;
-    mDataFormat.mBitsPerChannel    = 16 ;
-    mDataFormat.mChannelsPerFrame  = 1 ;
-    mDataFormat.mBytesPerPacket    = (mDataFormat.mBitsPerChannel / 8) * mDataFormat.mChannelsPerFrame;
-    mDataFormat.mBytesPerFrame     = mDataFormat.mBytesPerPacket;
-    mDataFormat.mFramesPerPacket   = 1;
-    mDataFormat.mReserved          = 0;
-    mDataFormat.mFormatID          = kAudioFormatLinearPCM;
-    mDataFormat.mFormatFlags       = mDataFormat.mBitsPerChannel == 8 ? kLinearPCMFormatFlagIsPacked : (kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked);
-    
+    AudioStreamBasicDescription mDataFormat = *fmtDesc;
     
     //Create AudioFile
     
