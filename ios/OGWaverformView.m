@@ -537,7 +537,7 @@
         }
     }
     
-    UInt32 bytesPerSample = 2 * channelCount;
+    UInt32 bytesPerSample = fmtDesc->mBytesPerPacket * fmtDesc->mFramesPerPacket * channelCount;
     Float32 normalizeMax = noiseFloor;
     NSLog(@"normalizeMax = %f",normalizeMax);
     NSMutableData * actualSongData = [[NSMutableData alloc] init];
@@ -545,7 +545,7 @@
     
     UInt64 totalBytes = 0;
 
-    NSInteger startBytes = (sampleRate * bytesPerSample/2 * self.offsetStart / 1000);
+    NSInteger startBytes = (sampleRate * bytesPerSample * self.offsetStart / 1000);
     NSInteger bytesToSkip = 0;
     
     if(startBytes < 0)
@@ -583,13 +583,13 @@
     
     if(self.offsetEnd > 0)
     {
-        NSInteger endbytes = (sampleRate * bytesPerSample/2 * self.offsetEnd / 1000);
+        NSInteger endbytes = (sampleRate * bytesPerSample * self.offsetEnd / 1000);
         NSMutableData * audioData = [NSMutableData dataWithLength:absX(endbytes)];
         [actualSongData appendBytes:audioData.mutableBytes length:audioData.length];
         
         
     } else if (self.offsetEnd < 0){
-        NSInteger endBytes = (sampleRate * bytesPerSample/2 * self.offsetEnd / 1000);
+        NSInteger endBytes = (sampleRate * bytesPerSample * self.offsetEnd / 1000);
         NSMutableData *newSongData = [NSMutableData dataWithBytes:actualSongData.bytes length:actualSongData.length - absX(endBytes)];
         //        [newData appendBytes:fullSongData.bytes length:fullSongData.length - absX(endSamples)];
         //        [newSongData appendBytes:actualSongData.bytes length:actualSongData.length - absX(endBytes)];
