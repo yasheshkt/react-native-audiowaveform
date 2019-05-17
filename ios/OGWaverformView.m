@@ -32,6 +32,11 @@
 }
 
 -(void)reactSetFrame:(CGRect)frame{
+
+    if (!CGRectEqualToRect(self.view.frame, frame)) {
+      _waveformImage = nil;
+    }
+
     self.frame=frame;
     
     //Setup UI Views
