@@ -33,7 +33,7 @@
 
 -(void)reactSetFrame:(CGRect)frame{
 
-    if (!CGRectEqualToRect(self.view.frame, frame)) {
+    if (!CGRectEqualToRect(self.frame, frame)) {
       _waveformImage = nil;
     }
 
