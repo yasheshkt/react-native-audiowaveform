@@ -281,7 +281,7 @@
                     imageHeight:(float) imageHeight
 {
     CGSize imageSize = CGSizeMake(sampleCount, imageHeight);
-    UIGraphicsBeginImageContext(imageSize);
+    UIGraphicsBeginImageContextWithOptions(imageSize, false, UIScreen.mainScreen.scale);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);
