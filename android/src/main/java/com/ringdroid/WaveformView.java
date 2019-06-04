@@ -41,6 +41,7 @@ import java.math.BigInteger;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.SecureRandom;
+import java.io.File;
 
 /**
  * WaveformView is an Android view that displays a visual representation
@@ -58,8 +59,23 @@ import java.security.SecureRandom;
 public class WaveformView extends View {
     public void setmURI(String mURI) {
         this.mURI = mURI;
-        String filePath = Environment.getExternalStorageDirectory().toString() + "/"+random()+".mp3";
-        new DownloadFileFromURL().execute(this.mURI,filePath);
+        // String filePath = Environment.getExternalStorageDirectory().toString() + "/"+random()+".mp3";
+        try {
+          File inputFile = new File(mURI);
+          Log.d("WaveformView", "= = = = = = = mURI = " + mURI);
+          Log.d("WaveformView", "= = = = = = = inputFile = " + inputFile);
+          Log.d("WaveformView", "= = = = = = = inputFile.getAbsolutePath() = " + inputFile.getAbsolutePath());
+          SoundFile soundFile = SoundFile.create(mURI, null);
+          Log.d("WaveformView", "= = = = = = = soundFile = " + soundFile);
+          if (soundFile != null) {
+            setSoundFile(soundFile);
+            recomputeHeights(8f);
+            invalidate();
+          }
+        } catch (Exception e) {
+          Log.d("WaveformView", "= = = = = = = ERROR = " + e);
+        }
+        // new DownloadFileFromURL().execute(this.mURI,filePath);
     }
 
     public void setmWaveColor(int mWaveColor) {

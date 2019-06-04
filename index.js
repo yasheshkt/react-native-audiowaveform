@@ -71,7 +71,7 @@ export default class WaveForm extends PureComponent<
 
     let uri = assetResoved.uri;
     if (uri && uri.match(/^\//)) {
-      uri = `file://${uri}`;
+      uri = `${uri}`;
     }
 
     const isNetwork = !!(uri && uri.match(/^https?:/));
