@@ -27,6 +27,7 @@ export default class WaveForm extends PureComponent<
     super(props);
     this._onPress = this._onPress.bind(this);
     this._onFinishPlay = this._onFinishPlay.bind(this);
+    this._onWaveformLoaded = this._onWaveformLoaded.bind(this);
   }
 
   _makeid() {
@@ -57,14 +58,14 @@ export default class WaveForm extends PureComponent<
     }
   }
 
-  _waveformLoaded(e) {
-    this.props.onWaveformLoaded(event);
+  _onWaveformLoaded(e) {
+    this.props.onWaveformLoaded(e);
   }
 
   componentWillMount() {
     DeviceEventEmitter.addListener("OGOnPress", this._onPress);
     DeviceEventEmitter.addListener("OGFinishPlay", this._onFinishPlay);
-    DeviceEventEmitter.addListener("waveformLoaded", this._waveformLoaded);
+    DeviceEventEmitter.addListener("waveformLoaded", this._onWaveformLoaded);
     const componentID = this._makeid();
     this.setState({ componentID });
   }
@@ -109,6 +110,7 @@ export default class WaveForm extends PureComponent<
         {...nativeProps}
         onPress={this._onPress}
         onFinishPlay={this._onFinishPlay}
+        onWaveformLoaded={this._onWaveformLoaded}
       />
     );
   }
