@@ -42,6 +42,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.SecureRandom;
 import java.io.File;
+import java.lang.Thread;
 
 /**
  * WaveformView is an Android view that displays a visual representation
@@ -59,22 +60,24 @@ import java.io.File;
 public class WaveformView extends View {
     public void setmURI(String mURI) {
         this.mURI = mURI;
+        final String mURIFinal = mURI;
+        Thread mCreateFileThread;
         // String filePath = Environment.getExternalStorageDirectory().toString() + "/"+random()+".mp3";
-        try {
-          File inputFile = new File(mURI);
-          Log.d("WaveformView", "= = = = = = = mURI = " + mURI);
-          Log.d("WaveformView", "= = = = = = = inputFile = " + inputFile);
-          Log.d("WaveformView", "= = = = = = = inputFile.getAbsolutePath() = " + inputFile.getAbsolutePath());
-          SoundFile soundFile = SoundFile.create(mURI, null);
-          Log.d("WaveformView", "= = = = = = = soundFile = " + soundFile);
-          if (soundFile != null) {
-            setSoundFile(soundFile);
-            recomputeHeights(8f);
-            invalidate();
+        mCreateFileThread = new Thread() {
+          public void run() {
+            try {
+              SoundFile soundFile = SoundFile.create(mURIFinal, null);
+              if (soundFile != null) {
+                setSoundFile(soundFile);
+                recomputeHeights(8f);
+                invalidate();
+              }
+            } catch (Exception e) {
+              Log.d("WaveformView", "= = = = = = = ERROR = " + e);
+            }
           }
-        } catch (Exception e) {
-          Log.d("WaveformView", "= = = = = = = ERROR = " + e);
-        }
+        };
+        mCreateFileThread.start();
         // new DownloadFileFromURL().execute(this.mURI,filePath);
     }
 
