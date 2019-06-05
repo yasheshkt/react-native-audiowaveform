@@ -57,9 +57,14 @@ export default class WaveForm extends PureComponent<
     }
   }
 
+  _waveformLoaded(e) {
+    this.props.onWaveformLoaded(event);
+  }
+
   componentWillMount() {
     DeviceEventEmitter.addListener("OGOnPress", this._onPress);
     DeviceEventEmitter.addListener("OGFinishPlay", this._onFinishPlay);
+    DeviceEventEmitter.addListener("waveformLoaded", this._waveformLoaded);
     const componentID = this._makeid();
     this.setState({ componentID });
   }

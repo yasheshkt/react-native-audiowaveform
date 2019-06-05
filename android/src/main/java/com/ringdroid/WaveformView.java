@@ -43,6 +43,9 @@ import java.net.URLConnection;
 import java.security.SecureRandom;
 import java.io.File;
 import java.lang.Thread;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.Arguments;
 
 /**
  * WaveformView is an Android view that displays a visual representation
@@ -63,12 +66,21 @@ public class WaveformView extends View {
         final String mURIFinal = mURI;
         Thread mCreateFileThread;
         // String filePath = Environment.getExternalStorageDirectory().toString() + "/"+random()+".mp3";
+        final ReactContext thisReactContext = this.thisContext;
         mCreateFileThread = new Thread() {
           public void run() {
             try {
+              Log.d("WaveformView", "= = = = = = = START = ");
               SoundFile soundFile = SoundFile.create(mURIFinal, null);
+
+              WritableMap map = Arguments.createMap();
+              map.putString("isLoaded", "true");
+              thisReactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("waveformLoaded", map);
+
+              Log.d("WaveformView", "= = = = = = = END = ");
               if (soundFile != null) {
                 setSoundFile(soundFile);
+                Log.d("WaveformView", "= = = = = = = END 2 = ");
                 recomputeHeights(8f);
                 invalidate();
               }
@@ -252,12 +264,13 @@ public class WaveformView extends View {
     private boolean mInitialized;
     private int mWaveColor;
     private OGWaveView waveView;
+    private ReactContext thisContext;
 
     public WaveformView(Context context, OGWaveView waveView) {
         super(context);
 
         this.waveView = waveView;
-
+        this.thisContext = (ReactContext)context;
         // We don't want keys, the markers get these
         setFocusable(false);
 
